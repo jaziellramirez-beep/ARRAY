@@ -1,1 +1,159 @@
+/////////////////////////////////////////////////////////////////////
+// Name:
+// Date: 11/4/26
+// Class: CSCI 1470-04
+// Semester: Fall 2026
+// CSCI 1470 Instructor: Dr. Jonatan Reyes
+// Program Description: a spell checker for elementary students
+///////////////////////////////////////////////////////////////////// 
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <chrono>
+#include <iomanip>
 
+using namespace std;
+using namespace std::chrono;// YOU DONT HAVE TO PUT CHRONO::
+
+// Global constant debug flag
+const bool DEBUG = true; 
+
+// FUNCTION PROTOTYPE
+void initializeArray(string dictArray[], int size);
+bool populateArray(string dictArray[], int size, string filename);
+int countNonEmptyWords(const string dictArray[], int size);
+void printArray(const string dictArray[], int size);
+
+
+
+
+
+
+
+
+int main() {
+    const int DICT_SIZE = 1000; 
+    string dictionary[DICT_SIZE];
+    string filename = "dictionary_small.txt"; 
+
+    cout << "***************************************************" << endl;
+    cout << "    Welcome to the Super Speller 3000       " << endl;
+    cout << "  [UNDER CONSTRUCTION - Building word powers...]   " << endl;
+    cout << "***************************************************" << endl;
+
+    // 1. Initialize Array
+    auto start = high_resolution_clock::now();
+    initializeArray(dictionary, DICT_SIZE);
+    auto end = high_resolution_clock::now();
+    
+         if (DEBUG) {
+           auto elapsed = duration_cast<chrono::microseconds>(end - start).count();
+           cout << "DEBUG: Initialization took " << elapsed << " microseconds." << endl;
+         }
+
+    // 2. Populate Array
+    start = high_resolution_clock::now();
+    bool success = populateArray(dictionary, DICT_SIZE, filename);
+    end = high_resolution_clock::now();
+
+    if (!success) {
+        cout << "Error: Could not load the dictionary file! Please check for file." << endl;
+        return 1; // Exit program due to failure
+    }
+
+    if (DEBUG) {
+        auto elapsed = duration_cast<microseconds>(end - start).count();
+        cout << "DEBUG: Loading took " << elapsed << " microseconds." << endl;
+    }
+
+    // 3. Debug Print Array
+    if (DEBUG) {
+        start = high_resolution_clock::now();
+        printArray(dictionary, DICT_SIZE);
+        end = high_resolution_clock::now();
+        auto elapsed = duration_cast<microseconds>(end - start).count();
+        cout << "DEBUGGING: Printing took " << elapsed << " microseconds." << endl;
+    }
+
+    // 4. Count Words
+    start = high_resolution_clock::now();// the time for
+    int activeWords = countNonEmptyWords(dictionary, DICT_SIZE);
+    end = high_resolution_clock::now();
+
+    // Notify user of loaded word count
+    cout << "Loaded " << activeWords << " words from dictionary." << endl;
+
+    if (DEBUG) {
+        auto elapsed = duration_cast<microseconds>(end - start).count();
+        cout << "DEBUGGING: Word count took " << elapsed << " microseconds." << endl;
+    }
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+//FUNCTIONS
+
+
+// put all array elements to empty strings
+void initializeArray(string dictArray[], int size) {
+    for (int i = 0; i < size; i++) {
+        dictArray[i] = "";
+    }
+}
+
+
+
+// FUNCTION ACCESS THE FILE AND UPDATE
+bool populateArray(string dictArray[], int size, string filename) {
+    ifstream inputFile(filename);
+    
+    // SEE IF FILE EXIST
+    if (!inputFile.is_open()) {
+        return false; 
+    }
+
+    string word;
+    int count = 0;
+    
+    //READ EACH LINE
+    while (count < size && inputFile >> word) {
+        dictArray[count] = word;
+        count++;
+    }
+
+    inputFile.close();
+    return true; 
+}
+
+
+
+// FUNCTION REPEATS TO FIND WORDS 
+int countNonEmptyWords(const string dictArray[], int size) {
+    int count = 0;
+    for (int i = 0; i < size; i++) {
+        if (dictArray[i] != "") {
+            count++;
+        }
+    }
+    return count;
+}
+
+
+
+// FUNCTION TO DISPLAY FORMAT AND CONTENT OF THE WORD
+void printArray(const string dictArray[], int size) {
+    for (int i = 0; i < size; i++) {
+        // ONLY PRINTS AND DISPLAY WORDS
+        if (dictArray[i] != "") {
+            cout << (i + 1) << " " << dictArray[i] << endl;
+        }
+    }
+}
