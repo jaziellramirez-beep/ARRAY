@@ -1,0 +1,11 @@
+What is chrono?
+like a stop watch.
+• start = ...now(); snaps a picture of the exact time before the function starts.
+• end = ...now(); snaps a picture of the exact time after the function finishes.
+• high_resolution_clock is a specific tool inside the chrono library used for high-accuracy timing.apperantly in microseconds
+//////////////////////
+reminder:
+void return MULTIPLE value and NOT 1.(ASSESMENT)AND THE REFRENCES UPDATES VALUE also for return 1 value int its [return=math]
+and paremeter needed the main variable...
+////////////////////////
+! inverts somethings. turn no into yes or a 0 to 1 (vice versa)
