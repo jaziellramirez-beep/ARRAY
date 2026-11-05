@@ -9,3 +9,5 @@ void return MULTIPLE value and NOT 1.(ASSESMENT)AND THE REFRENCES UPDATES VALUE 
 and paremeter needed the main variable...
 ////////////////////////
 ! inverts somethings. turn no into yes or a 0 to 1 (vice versa)
+#include <fstream> is for files
+#include <iomanip>    for precision
