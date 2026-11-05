@@ -14,15 +14,14 @@
 
 using namespace std;
 using namespace std::chrono;// YOU DONT HAVE TO PUT CHRONO::
-
 // Global constant debug flag
 const bool DEBUG = true; 
 
 // FUNCTION PROTOTYPE
-void initializeArray(string dictArray[], int size);
-bool populateArray(string dictArray[], int size, string filename);
-int countNonEmptyWords(const string dictArray[], int size);
-void printArray(const string dictArray[], int size);
+void initializeArray(string dictArray[], int size);//function 1
+bool populateArray(string dictArray[], int size, string filename);//function 2
+int countNonEmptyWords(const string dictArray[], int size);//function 3
+void printArray(const string dictArray[], int size);//function 4
 
 
 
@@ -33,27 +32,27 @@ void printArray(const string dictArray[], int size);
 
 int main() {
     const int DICT_SIZE = 1000; 
-    string dictionary[DICT_SIZE];
+    string dictionary[DICT_SIZE];//this is dictarray[REMEMBER]
     string filename = "dictionary_small.txt"; 
-
+    cout << setprecision(2) << fixed;
     cout << "***************************************************" << endl;
     cout << "    Welcome to the Super Speller 3000       " << endl;
     cout << "  [UNDER CONSTRUCTION - Building word powers...]   " << endl;
     cout << "***************************************************" << endl;
 
     // 1. Initialize Array
-    auto start = high_resolution_clock::now();
-    initializeArray(dictionary, DICT_SIZE);
-    auto end = high_resolution_clock::now();
+    auto start = high_resolution_clock::now();//start timer
+    initializeArray(dictionary, DICT_SIZE);//function 1
+    auto end = high_resolution_clock::now();//end timer
     
          if (DEBUG) {
-           auto elapsed = duration_cast<chrono::microseconds>(end - start).count();
+           auto elapsed = duration_cast<microseconds>(end - start).count();
            cout << "DEBUG: Initialization took " << elapsed << " microseconds." << endl;
          }
 
     // 2. Populate Array
     start = high_resolution_clock::now();
-    bool success = populateArray(dictionary, DICT_SIZE, filename);
+    bool success = populateArray(dictionary, DICT_SIZE, filename);//function 2
     end = high_resolution_clock::now();
 
     if (!success) {
@@ -69,15 +68,15 @@ int main() {
     // 3. Debug Print Array
     if (DEBUG) {
         start = high_resolution_clock::now();
-        printArray(dictionary, DICT_SIZE);
+        printArray(dictionary, DICT_SIZE);//function 3
         end = high_resolution_clock::now();
         auto elapsed = duration_cast<microseconds>(end - start).count();
         cout << "DEBUGGING: Printing took " << elapsed << " microseconds." << endl;
     }
 
     // 4. Count Words
-    start = high_resolution_clock::now();// the time for
-    int activeWords = countNonEmptyWords(dictionary, DICT_SIZE);
+    start = high_resolution_clock::now();
+    int activeWords = countNonEmptyWords(dictionary, DICT_SIZE);//function 4
     end = high_resolution_clock::now();
 
     // Notify user of loaded word count
@@ -116,7 +115,7 @@ bool populateArray(string dictArray[], int size, string filename) {
     ifstream inputFile(filename);
     
     // SEE IF FILE EXIST
-    if (!inputFile.is_open()) {
+    if (!inputFile.is_open()) {//remember the ! makes inverted so it means if its closed it no wrk
         return false; 
     }
 
